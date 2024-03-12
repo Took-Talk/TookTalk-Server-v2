@@ -24,14 +24,6 @@ public class ChatService {
         chatRooms = new LinkedHashMap<>();
     }
 
-    public List<ChatRoom> findAllRoom(){
-        return new ArrayList<>(chatRooms.values());
-    }
-
-    public ChatRoom findRoomById(String roomId){
-        return chatRooms.get(roomId);
-    }
-
     public ChatRoom createRoom(String name){
         String roomId = UUID.randomUUID().toString();
 

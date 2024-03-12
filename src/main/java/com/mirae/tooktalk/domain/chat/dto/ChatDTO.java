@@ -20,5 +20,4 @@ public class ChatDTO {
 
     private String roomId;
     private String sender;
-    private String time;
 }

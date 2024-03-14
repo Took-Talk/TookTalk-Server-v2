@@ -1,4 +1,4 @@
-package com.mirae.tooktalk.domain.user;
+package com.mirae.tooktalk.domain.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;

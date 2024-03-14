@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Entity
 @Getter
@@ -43,6 +44,11 @@ public class UserEntity {
     */
     @Column(nullable = false)
     private String gender;
+
+    /*
+        관심사
+    */
+    private List<String> interests;
 
     /*
         자기소개

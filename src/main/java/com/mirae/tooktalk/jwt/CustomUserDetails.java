@@ -1,7 +1,7 @@
 package com.mirae.tooktalk.jwt;
 
 import lombok.RequiredArgsConstructor;
-import com.mirae.tooktalk.domain.user.UserEntity;
+import com.mirae.tooktalk.domain.user.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

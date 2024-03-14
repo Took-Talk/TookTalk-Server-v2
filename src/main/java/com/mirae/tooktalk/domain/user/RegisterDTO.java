@@ -3,6 +3,8 @@ package com.mirae.tooktalk.domain.user;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class RegisterDTO {
@@ -30,6 +32,10 @@ public class RegisterDTO {
         성별
     */
     private String gender;
+    /*
+        관심사
+    */
+    private List<String> interests;
 
     /*
         자기 소개

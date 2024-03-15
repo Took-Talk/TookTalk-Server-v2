@@ -1,4 +1,4 @@
-package com.mirae.tooktalk.jwt;
+package com.mirae.tooktalk.domain.jwt;
 
 import lombok.RequiredArgsConstructor;
 import com.mirae.tooktalk.domain.user.entity.UserEntity;

@@ -1,5 +1,7 @@
-package com.mirae.tooktalk.jwt;
+package com.mirae.tooktalk.domain.jwt;
 
+import com.mirae.tooktalk.domain.jwt.CustomUserDetails;
+import com.mirae.tooktalk.jwt.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

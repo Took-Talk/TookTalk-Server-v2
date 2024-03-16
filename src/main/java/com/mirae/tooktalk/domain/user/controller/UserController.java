@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
+
     private final UserService userService;
 
     @PostMapping("/register")
-    public String register(RegisterDTO registerDTO) {
+    public String register(@RequestBody RegisterDTO registerDTO) {
         userService.register(registerDTO);
         return "ok";
     }

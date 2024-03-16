@@ -17,7 +17,7 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>(); // 권한 정보를 저장할 컬렉션 생성
 
-//        collection.add((GrantedAuthority) userEntity::getRole); // 사용자의 역할(role)을 GrantedAuthority로 변환하여 컬렉션에 추가
+        collection.add((GrantedAuthority) userEntity::getRole); // 사용자의 역할(role)을 GrantedAuthority로 변환하여 컬렉션에 추가
 
         return collection; // 권한 정보 컬렉션 반환
     }

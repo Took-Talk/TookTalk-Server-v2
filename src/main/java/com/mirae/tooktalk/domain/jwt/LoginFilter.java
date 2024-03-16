@@ -1,7 +1,5 @@
 package com.mirae.tooktalk.domain.jwt;
 
-import com.mirae.tooktalk.domain.jwt.CustomUserDetails;
-import com.mirae.tooktalk.jwt.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -46,7 +44,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String role = auth.getAuthority();
 
-        String token = jwtUtil.createToken(username, 1636027948L);
+        String token = jwtUtil.createToken(username, role, 1636027948L);
 
         response.addHeader("Authorization", "Bearer " + token);
     }

@@ -1,4 +1,4 @@
-package com.mirae.tooktalk.jwt;
+package com.mirae.tooktalk.domain.jwt;
 
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,11 +22,15 @@ public class JwtUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("username", String.class);
     }
 
+    public String getRole(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
+    }
+
     public Boolean isExpired(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
-    public String createToken(String username, Long expireMs) {
+    public String createToken(String username, String role, long expireMs) {
         return Jwts.builder()
                 .claim("username", username)
                 .issuedAt(new Date(System.currentTimeMillis()))

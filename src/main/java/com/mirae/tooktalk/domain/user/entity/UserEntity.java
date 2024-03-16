@@ -47,6 +47,7 @@ public class UserEntity {
     /*
         관심사
     */
+    @ElementCollection
     private List<String> interests;
 
     /*
@@ -55,6 +56,12 @@ public class UserEntity {
     @Column(nullable = false)
     private String bio;
 
+    /*
+        권한 정보 (임시)
+    */
+    @Column(nullable = false)
+    private String role;
+
     @Builder
     public UserEntity(
             String username,
@@ -62,7 +69,9 @@ public class UserEntity {
             String number,
             String age,
             String gender,
-            String bio
+            List<String> interests,
+            String bio,
+            String role
     )
     {
         this.username = username;
@@ -70,6 +79,19 @@ public class UserEntity {
         this.number = number;
         this.age = age;
         this.gender = gender;
+        this.interests = interests;
+        this.bio = bio;
+        this.role = role;
+    }
+
+    public void editUser(String username, String password, String number,
+                         String age, String gender, List<String> interests, String bio) {
+        this.username = username;
+        this.password = password;
+        this.number = number;
+        this.age = age;
+        this.gender = gender;
+        this.interests = interests;
         this.bio = bio;
     }
 }

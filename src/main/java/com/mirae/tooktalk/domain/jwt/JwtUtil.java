@@ -1,5 +1,8 @@
 package com.mirae.tooktalk.domain.jwt;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,11 +18,13 @@ public class JwtUtil {
     private final SecretKey secretKey;
 
     public JwtUtil(@Value("${spring.jwt.secret}") String secret) {
-        this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
+        this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
     }
 
     public String getUsername(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("username", String.class);
+        String username = Jwts.parser().verifyWith(secretKey).build().parseClaimsJws(token).getBody().getSubject();
+        System.out.println("Extracted username from JWT: " + username);
+        return username;
     }
 
     public String getRole(String token) {
@@ -28,6 +33,16 @@ public class JwtUtil {
 
     public Boolean isExpired(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+    }
+
+    // 토큰 검증 메서드
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().verifyWith(secretKey).build().parse(token);
+            return true;
+        } catch (JwtException e) {
+            return false;
+        }
     }
 
     public String createToken(String username, String role, long expireMs) {

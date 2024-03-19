@@ -8,8 +8,6 @@ import com.mirae.tooktalk.domain.chat.ChatRoom;
 import com.mirae.tooktalk.domain.chat.service.ChatService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @Slf4j
 @RequiredArgsConstructor

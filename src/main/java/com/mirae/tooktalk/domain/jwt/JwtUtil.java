@@ -1,7 +1,5 @@
 package com.mirae.tooktalk.domain.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,8 +46,8 @@ public class JwtUtil {
     public String createToken(String username, String role, long expireMs) {
         return Jwts.builder()
                 .claim("username", username)
+                .claim("role", role)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expireMs))
                 .signWith(secretKey)
                 .compact();
     }

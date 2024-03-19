@@ -1,6 +1,5 @@
 package com.mirae.tooktalk.domain.jwt;
 
-import com.mirae.tooktalk.domain.jwt.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import com.mirae.tooktalk.domain.user.entity.UserEntity;
 import com.mirae.tooktalk.domain.user.repository.UserRepository;

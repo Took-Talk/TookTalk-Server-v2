@@ -1,7 +1,6 @@
 package com.mirae.tooktalk.domain.user.service;
 
 import com.mirae.tooktalk.domain.user.dto.EditDTO;
-import com.mirae.tooktalk.domain.user.dto.RegisterDTO;
 import com.mirae.tooktalk.domain.user.dto.UserDTO;
 import com.mirae.tooktalk.domain.user.entity.UserEntity;
 import com.mirae.tooktalk.domain.user.repository.UserRepository;
@@ -23,8 +22,8 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 회원가입 메서드
-    public void register(RegisterDTO registerDTO) {
-        String number = registerDTO.getNumber();
+    public void register(UserDTO userDTO) {
+        String number = userDTO.getNumber();
 
         // 사용자 존재 여부 확인
         if (userRepository.findByNumber(number).isPresent()) {
@@ -34,13 +33,13 @@ public class UserService {
         // 존재하지 않는 사용자라면 새로운 사용자 정보를 저장
         userRepository.save(
                 UserEntity.builder()
-                        .username(registerDTO.getUsername())
-                        .password(bCryptPasswordEncoder.encode(registerDTO.getPassword()))
-                        .age(registerDTO.getAge())
-                        .gender(registerDTO.getGender())
-                        .interests(registerDTO.getInterests())
-                        .bio(registerDTO.getBio())
-                        .number(registerDTO.getNumber())
+                        .username(userDTO.getUsername())
+                        .password(bCryptPasswordEncoder.encode(userDTO.getPassword()))
+                        .age(userDTO.getAge())
+                        .gender(userDTO.getGender())
+                        .interests(userDTO.getInterests())
+                        .bio(userDTO.getBio())
+                        .number(userDTO.getNumber())
                         .role("ROLE_USER")
                         .build()
         );

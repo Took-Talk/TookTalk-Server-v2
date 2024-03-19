@@ -1,6 +1,6 @@
 package com.mirae.tooktalk.domain.user.controller;
 
-import com.mirae.tooktalk.domain.user.dto.RegisterDTO;
+import com.mirae.tooktalk.domain.user.dto.UserDTO;
 import com.mirae.tooktalk.domain.user.service.UserService;
 import com.mirae.tooktalk.domain.user.dto.EditDTO;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterDTO registerDTO) {
-        userService.register(registerDTO);
+    public String register(@RequestBody UserDTO userDTO) {
+        userService.register(userDTO);
         return "ok";
     }
 

@@ -21,7 +21,7 @@ public class UserController {
     @PostMapping("/register")
     public String register(@RequestBody UserDTO userDTO) {
         userService.register(userDTO);
-        return "ok";
+        return "{}";
     }
 
     @Operation(summary = "프로필 수정", description = "프로필을 수정합니다.")

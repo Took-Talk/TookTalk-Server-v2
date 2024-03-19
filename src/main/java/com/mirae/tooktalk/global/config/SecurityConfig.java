@@ -52,6 +52,8 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/login", "/register").permitAll()
+                .requestMatchers("/v3/**", "/swagger-ui/** ").permitAll()
+                .requestMatchers("/user", "/chat").hasRole("USER")
                 .anyRequest().authenticated()
         );
 

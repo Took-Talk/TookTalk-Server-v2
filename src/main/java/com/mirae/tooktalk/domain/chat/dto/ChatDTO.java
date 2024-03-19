@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ChatDTO {
-    // 메시지  타입 : 입장, 채팅, 퇴장
+    /* 메시지  타입 : 입장, 채팅, 퇴장 */
     public enum MessageType{
         ENTER, TALK, GONE
     }

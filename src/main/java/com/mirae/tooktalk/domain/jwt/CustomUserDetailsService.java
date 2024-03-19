@@ -1,6 +1,5 @@
 package com.mirae.tooktalk.domain.jwt;
 
-import com.mirae.tooktalk.domain.jwt.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import com.mirae.tooktalk.domain.user.entity.UserEntity;
 import com.mirae.tooktalk.domain.user.repository.UserRepository;
@@ -19,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    // 사용자명을 받아 해당 사용자의 UserDetails 정보를 반환하는 메서드
+    /* 사용자명을 받아 해당 사용자의 UserDetails 정보를 반환하는 메서드 */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserEntity> userData = userRepository.findByUsername(username);

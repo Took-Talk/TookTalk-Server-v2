@@ -27,12 +27,12 @@ public class ChatService {
     public ChatRoom createRoom(String name){
         String roomId = UUID.randomUUID().toString();
 
-        // Builder를 사용하여 ChatRoom 을 Build
+        /* Builder를 사용하여 ChatRoom 을 Build */
         ChatRoom room = ChatRoom.builder()
                 .roomId(roomId)
                 .name(name)
                 .build();
-        chatRooms.put(roomId,room); // 랜덤 아이디와 room 정보를 Map 에 저장
+        chatRooms.put(roomId,room); /* 랜덤 아이디와 room 정보를 Map 에 저장 */
 
         return room;
     }
@@ -44,7 +44,4 @@ public class ChatService {
             log.error(e.getMessage(),e);
         }
     }
-
-
-
 }

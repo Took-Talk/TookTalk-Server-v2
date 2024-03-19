@@ -1,7 +1,7 @@
-package com.mirae.tooktalk.jwt;
+package com.mirae.tooktalk.domain.jwt;
 
 import lombok.RequiredArgsConstructor;
-import com.mirae.tooktalk.domain.user.UserEntity;
+import com.mirae.tooktalk.domain.user.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,7 +17,7 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>(); // 권한 정보를 저장할 컬렉션 생성
 
-//        collection.add((GrantedAuthority) userEntity::getRole); // 사용자의 역할(role)을 GrantedAuthority로 변환하여 컬렉션에 추가
+        collection.add((GrantedAuthority) userEntity::getRole); // 사용자의 역할(role)을 GrantedAuthority로 변환하여 컬렉션에 추가
 
         return collection; // 권한 정보 컬렉션 반환
     }

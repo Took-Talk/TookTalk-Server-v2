@@ -25,14 +25,9 @@ public class ChatHandler extends TextWebSocketHandler {
         String payload = (String) message.getPayload();
         log.info("payload : {}",payload);
 
-//        TextMessage intialGretting = new TextMessage("Welcome to Chat Server");
+        TextMessage intialGretting = new TextMessage("Welcome to Chat Server");
         ChatDTO chatMessage = mapper.readValue(payload, ChatDTO.class);
         log.info("session : {}",chatMessage.toString());
-
-        ChatRoom room = service.findRoomById(chatMessage.getRoomId());
-        log.info("room : {}",room.toString());
-
-        room.handleAction(session,chatMessage, service);
 
     }
 

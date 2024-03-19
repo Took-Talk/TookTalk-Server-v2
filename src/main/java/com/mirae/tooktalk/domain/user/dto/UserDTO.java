@@ -1,4 +1,4 @@
-package com.mirae.tooktalk.domain.user;
+package com.mirae.tooktalk.domain.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,8 @@ import java.util.List;
 
 @Getter
 @Setter
-public class RegisterDTO {
+public class UserDTO {
+
     /*
         전화번호
     */

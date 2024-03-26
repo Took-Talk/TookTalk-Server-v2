@@ -17,9 +17,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("회원의 이메일을 찾을 수 없습니다: " + email));
+    public UserDetails loadUserByUsername(String number) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findByNumber(number)
+                .orElseThrow(() -> new UsernameNotFoundException("회원의 전화번호를 찾을 수 없습니다: " + number));
         return UserDetailsImpl.build(userEntity);
     }
 }

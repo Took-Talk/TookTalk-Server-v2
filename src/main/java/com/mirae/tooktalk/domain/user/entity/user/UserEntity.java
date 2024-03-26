@@ -24,12 +24,6 @@ public class UserEntity {
     private int id;
 
     /*
-        닉네임
-    */
-    @Column(nullable = false)
-    private String username;
-
-    /*
         전화번호
     */
     @Column(nullable = false)
@@ -42,10 +36,22 @@ public class UserEntity {
     private String password;
 
     /*
+        닉네임
+    */
+    @Column(nullable = false)
+    private String nickname;
+
+    /*
         나이
     */
     @Column(nullable = false)
     private String age;
+
+    /*
+       성별
+    */
+    @Column(nullable = false)
+    private String gender;
 
     /*
        mbti
@@ -74,21 +80,23 @@ public class UserEntity {
     private Integer status;
 
     public static UserEntity registerUser(
-            String username,
             String password,
             String number,
+            String nickname,
             String age,
             String mbti,
+            String gender,
             List<String> interests,
             String bio,
             Set<RoleEntity> roles
     ) {
         UserEntity user = new UserEntity();
-        user.username = username;
         user.password = password;
         user.number = number;
+        user.nickname = nickname;
         user.age = age;
         user.mbti = mbti;
+        user.gender = gender;
         user.interests = interests;
         user.bio = bio;
         user.status = UserState.ACTIVE.getValue();

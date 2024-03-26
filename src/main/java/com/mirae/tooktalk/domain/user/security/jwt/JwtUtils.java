@@ -21,7 +21,7 @@ public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     private final SecretKey key;
-    @Value("${spring.jwt.secret}")
+    @Value("${spring.jwt.jwtExpirationMs}")
     private int jwtExpirationMs;
 
     public JwtUtils(@Value("${spring.jwt.secret}") String jwtSecret) {

@@ -4,7 +4,6 @@ import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
 import com.mirae.tooktalk.domain.user.exception.CustomException;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
-import com.mirae.tooktalk.domain.user.repository.userroles.UserRolesRepository;
 import com.mirae.tooktalk.domain.user.service.role.RoleService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +16,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final UserRolesRepository userRolesRepository;
-
     private final RoleService roleService;
 
     private final PasswordEncoder encoder;
@@ -26,10 +23,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void registerUser(SignupRequest signupRequest) throws CustomException {
-        if (userRepository.existsByEmail(signupRequest.getEmail())) {
-            throw new CustomException("이미 사용중인 이메일입니다.");
+        if (userRepository.existsByNumber(signupRequest.getNumber())) {
+            throw new CustomException("이미 사용중인 전화번호 입니다.");
         }
-        UserEntity user = UserEntity.registerUser(signupRequest.getEmail(), signupRequest.getUsername(), encoder.encode(signupRequest.getPassword()), roleService.getDefaultRole());
+        UserEntity user = UserEntity.registerUser(
+                 encoder.encode(signupRequest.getPassword()),signupRequest.getNumber(), signupRequest.getNickname(),
+                signupRequest.getAge(), signupRequest.getGender(), signupRequest.getMbti(),
+                signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole());
         userRepository.save(user);
     }
 

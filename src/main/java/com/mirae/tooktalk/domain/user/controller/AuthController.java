@@ -35,7 +35,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok().body(authenticateAndGenerateJWT(loginRequest.getEmail(), loginRequest.getPassword()));
+        return ResponseEntity.ok().body(authenticateAndGenerateJWT(loginRequest.getNumber(), loginRequest.getPassword()));
     }
 
     @PostMapping("/signup")
@@ -44,7 +44,7 @@ public class AuthController {
         // 유저 등록
         userService.registerUser(signupRequest);
 
-        JwtResponse jwtResponse = authenticateAndGenerateJWT(signupRequest.getEmail(), signupRequest.getPassword());
+        JwtResponse jwtResponse = authenticateAndGenerateJWT(signupRequest.getNumber(), signupRequest.getPassword());
         ApiResponse<JwtResponse> response = ApiResponse.setApiResponse(true, "회원 가입이 완료 되었습니다!", jwtResponse);
 
         return ResponseEntity.ok().body(response);
@@ -62,6 +62,7 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
-        return JwtResponse.setJwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roleNames);
+        return JwtResponse.setJwtResponse(jwt, (long) userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roleNames);
     }
+
 }

@@ -17,9 +17,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Set<RoleEntity> getDefaultRole() {
-        RoleEntity userRole = roleRepository.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: 해당하는 권한이 없습니다."));
+        //RoleEntity userRole = roleRepository.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: 해당하는 권한이 없습니다."));
         Set<RoleEntity> roles = new HashSet<>();
-        roles.add(userRole);
+        //roles.add(userRole);
         return roles;
     }
 }

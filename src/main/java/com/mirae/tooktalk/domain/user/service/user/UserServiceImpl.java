@@ -1,4 +1,4 @@
-package com.netflixclone.app.service.user;
+package com.mirae.tooktalk.domain.user.service.user;
 
 import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
 import com.mirae.tooktalk.domain.user.exception.CustomException;
@@ -6,7 +6,6 @@ import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
 import com.mirae.tooktalk.domain.user.repository.userroles.UserRolesRepository;
 import com.mirae.tooktalk.domain.user.service.role.RoleService;
-import com.mirae.tooktalk.domain.user.service.user.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

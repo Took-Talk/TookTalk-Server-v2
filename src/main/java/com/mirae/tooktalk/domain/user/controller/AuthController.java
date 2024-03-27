@@ -9,6 +9,8 @@ import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
 import com.mirae.tooktalk.domain.user.security.jwt.JwtUtils;
 import com.mirae.tooktalk.domain.user.security.service.UserDetailsImpl;
 import com.mirae.tooktalk.domain.user.service.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,9 +22,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "유저", description = "유저 관련 api 입니다.")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthenticationManager authenticationManager;
@@ -33,11 +36,13 @@ public class AuthController {
 
     private final JwtUtils jwtUtils;
 
+    @Operation(summary = "로그인", description = "로그인을 진행합니다.")
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok().body(authenticateAndGenerateJWT(loginRequest.getNumber(), loginRequest.getPassword()));
     }
 
+    @Operation(summary = "회원가입", description = "회원가입을 진행합니다.")
     @PostMapping("/signup")
     public ResponseEntity<?> registerAndAuthenticateUser(@RequestBody SignupRequest signupRequest) throws CustomException {
 

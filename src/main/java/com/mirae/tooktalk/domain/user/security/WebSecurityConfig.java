@@ -61,8 +61,10 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/test/**").permitAll()
-                                .requestMatchers("/ws/chat/**").permitAll()
-                                .anyRequest().authenticated()
+                                .requestMatchers("/stomp/**").permitAll()
+                                .requestMatchers("/sub/**").permitAll()
+                                .requestMatchers("/pub/**").permitAll()
+                                .anyRequest().permitAll()
                 );
 
         http.authenticationProvider(authenticationProvider());

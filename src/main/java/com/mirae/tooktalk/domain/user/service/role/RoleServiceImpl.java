@@ -1,7 +1,6 @@
 package com.mirae.tooktalk.domain.user.service.role;
 
 import com.mirae.tooktalk.domain.user.entity.role.RoleEntity;
-import com.mirae.tooktalk.domain.user.enums.ERole;
 import com.mirae.tooktalk.domain.user.repository.role.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

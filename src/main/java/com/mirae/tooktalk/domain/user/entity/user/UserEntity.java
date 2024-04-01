@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ import java.util.Set;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     /*
         전화번호
@@ -50,19 +51,19 @@ public class UserEntity {
        성별
     */
     @Column(nullable = false)
-    private UserGender gender;
+    private String gender;
 
     /*
        mbti
     */
     @Column(nullable = false)
-    private UserMbti mbti;
+    private String mbti;
 
     /*
         관심사
     */
-    @Embedded
-    private UserInterest<Interest> interests;
+    @ElementCollection
+    private List<String> interests;
 
     /*
         자기소개
@@ -83,9 +84,9 @@ public class UserEntity {
             String number,
             String nickname,
             String age,
-            UserMbti mbti,
-            UserGender gender,
-            UserInterest<Interest> interests,
+            String mbti,
+            String gender,
+            List<String> interests,
             String bio,
             Set<RoleEntity> roles
     ) {
@@ -93,9 +94,9 @@ public class UserEntity {
         user.password = password;
         user.number = number;
         user.nickname = nickname;
+        user.gender = gender;
         user.age = age;
         user.mbti = mbti;
-        user.gender = gender;
         user.interests = interests;
         user.bio = bio;
         user.status = UserState.ACTIVE.getValue();

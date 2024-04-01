@@ -1,12 +1,12 @@
 package com.mirae.tooktalk.domain.user.payload.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.mirae.tooktalk.domain.user.enums.Interest;
+import com.mirae.tooktalk.domain.user.enums.UserGender;
+import com.mirae.tooktalk.domain.user.entity.user.UserInterest;
+import com.mirae.tooktalk.domain.user.enums.UserMbti;
+import lombok.Data;
 
-import java.util.List;
-
-@Getter
-@Setter
+@Data
 public class SignupRequest {
 
     private String number;
@@ -15,13 +15,26 @@ public class SignupRequest {
 
     private String nickname;
 
-    private String gender;
+    private UserGender gender;
 
     private String age;
 
-    private String mbti;
+    private UserMbti mbti;
 
-    private List<String> interests;
+    private UserInterest<Interest> interests;
 
     private String bio;
+
+    public UserGender getGender() {
+        return gender;
+    }
+
+    public UserMbti getMbti() {
+        return mbti;
+    }
+
+    public void setMbti(UserMbti mbti) {
+        this.mbti = mbti;
+    }
+
 }

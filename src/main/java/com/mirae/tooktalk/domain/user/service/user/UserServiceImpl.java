@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder encoder;
 
+
     @Override
     @Transactional
     public void registerUser(SignupRequest signupRequest) throws CustomException {
@@ -27,10 +28,16 @@ public class UserServiceImpl implements UserService {
             throw new CustomException("이미 사용중인 전화번호 입니다.");
         }
         UserEntity user = UserEntity.registerUser(
-                 encoder.encode(signupRequest.getPassword()),signupRequest.getNumber(), signupRequest.getNickname(),
-                signupRequest.getAge(), signupRequest.getGender(), signupRequest.getMbti(),
-                signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole());
+                        encoder.encode(signupRequest.getPassword()),
+                        signupRequest.getNumber(),
+                        signupRequest.getNickname(),
+                        signupRequest.getAge(),
+                        signupRequest.getMbti(),
+                        signupRequest.getGender(),
+                        signupRequest.getInterests(),
+                        signupRequest.getBio(),
+                        roleService.getDefaultRole()
+                );
         userRepository.save(user);
     }
-
 }

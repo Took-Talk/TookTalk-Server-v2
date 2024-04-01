@@ -2,7 +2,7 @@ package com.mirae.tooktalk.domain.user.entity.user;
 
 import com.mirae.tooktalk.domain.user.entity.role.RoleEntity;
 import com.mirae.tooktalk.domain.user.entity.userroles.Userroles;
-import com.mirae.tooktalk.domain.user.enums.UserState;
+import com.mirae.tooktalk.domain.user.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -51,19 +50,19 @@ public class UserEntity {
        성별
     */
     @Column(nullable = false)
-    private String gender;
+    private UserGender gender;
 
     /*
        mbti
     */
     @Column(nullable = false)
-    private String mbti;
+    private UserMbti mbti;
 
     /*
         관심사
     */
-    @ElementCollection
-    private List<String> interests;
+    @Embedded
+    private UserInterest<Interest> interests;
 
     /*
         자기소개
@@ -84,9 +83,9 @@ public class UserEntity {
             String number,
             String nickname,
             String age,
-            String mbti,
-            String gender,
-            List<String> interests,
+            UserMbti mbti,
+            UserGender gender,
+            UserInterest<Interest> interests,
             String bio,
             Set<RoleEntity> roles
     ) {

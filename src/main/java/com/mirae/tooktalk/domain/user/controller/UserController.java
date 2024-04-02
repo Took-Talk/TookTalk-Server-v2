@@ -1,11 +1,12 @@
 package com.mirae.tooktalk.domain.user.controller;
 
+import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
 import com.mirae.tooktalk.domain.user.exception.CustomException;
 import com.mirae.tooktalk.domain.user.payload.request.LoginRequest;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 import com.mirae.tooktalk.domain.user.payload.response.ApiResponse;
 import com.mirae.tooktalk.domain.user.payload.response.JwtResponse;
-import com.mirae.tooktalk.domain.user.payload.response.UserInfoResponse;
+import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
 import com.mirae.tooktalk.domain.user.security.jwt.JwtUtils;
 import com.mirae.tooktalk.domain.user.security.service.UserDetailsImpl;
 import com.mirae.tooktalk.domain.user.service.user.UserService;
@@ -32,6 +33,8 @@ public class UserController {
 
     private final UserService userService;
 
+    private final UserRepository userRepository;
+
     private final JwtUtils jwtUtils;
 
     @Operation(summary = "로그인", description = "로그인을 진행합니다.")
@@ -53,12 +56,11 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
-    @Operation(summary = "유저 정보 제공", description = "토큰을 이용하여 유저 정보를 제공합니다.")
-    @GetMapping("/user-info")
-    public UserInfoResponse provideUserInfo(@RequestParam String token) {
-        UserInfoResponse userInfoResponse = new UserInfoResponse();
 
-        return userInfoResponse;
+    @Operation(summary = "마이페이지", description = "토큰을 이용하여 유저 정보를 제공합니다.")
+    @GetMapping("/userinfo")
+    public UserEntity provideUserInfo(Authentication authentication) {
+        return userRepository.findByNicknameEquals(authentication.getName()).get();
     }
 
     /* 인증 및 JWT 토큰 생성 */

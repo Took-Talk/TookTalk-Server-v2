@@ -5,7 +5,7 @@ import com.mirae.tooktalk.domain.user.payload.request.LoginRequest;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 import com.mirae.tooktalk.domain.user.payload.response.ApiResponse;
 import com.mirae.tooktalk.domain.user.payload.response.JwtResponse;
-import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
+import com.mirae.tooktalk.domain.user.payload.response.UserInfoResponse;
 import com.mirae.tooktalk.domain.user.security.jwt.JwtUtils;
 import com.mirae.tooktalk.domain.user.security.service.UserDetailsImpl;
 import com.mirae.tooktalk.domain.user.service.user.UserService;
@@ -27,10 +27,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class UserController {
     private final AuthenticationManager authenticationManager;
-
-    private final UserRepository userRepository;
 
     private final UserService userService;
 
@@ -46,7 +44,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerAndAuthenticateUser(@RequestBody SignupRequest signupRequest) throws CustomException {
 
-        // 유저 등록
+        /* 유저 등록 */
         userService.registerUser(signupRequest);
 
         JwtResponse jwtResponse = authenticateAndGenerateJWT(signupRequest.getNumber(), signupRequest.getPassword());
@@ -55,7 +53,15 @@ public class AuthController {
         return ResponseEntity.ok().body(response);
     }
 
-    // 인증 및 JWT 토큰 생성
+    @Operation(summary = "유저 정보 제공", description = "토큰을 이용하여 유저 정보를 제공합니다.")
+    @GetMapping("/user-info")
+    public UserInfoResponse provideUserInfo(@RequestParam String token) {
+        UserInfoResponse userInfoResponse = new UserInfoResponse();
+
+        return userInfoResponse;
+    }
+
+    /* 인증 및 JWT 토큰 생성 */
     private JwtResponse authenticateAndGenerateJWT(String email, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password));

@@ -26,6 +26,9 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByNumber(signupRequest.getNumber())) {
             throw new CustomException("이미 사용중인 전화번호 입니다.");
         }
+        if (userRepository.existsByNickname(signupRequest.getNickname())) {
+            throw new CustomException("이미 사용중인 닉네임 입니다.");
+        }
         UserEntity user = UserEntity.registerUser(
                 encoder.encode(signupRequest.getPassword()),signupRequest.getNumber(), signupRequest.getNickname(),
                 signupRequest.getAge(), signupRequest.getGender(), signupRequest.getMbti(),

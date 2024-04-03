@@ -7,8 +7,12 @@ import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
 import com.mirae.tooktalk.domain.user.service.role.RoleService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +39,19 @@ public class UserServiceImpl implements UserService {
                 signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole()
             );
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void fixUserData(UserEntity dto, String number) {
+        Optional<UserEntity> user = userRepository.findByNumber(number);
+        user.ifPresent(value -> value.fixUserData(
+                dto.getNickname(),
+                dto.getNumber(),
+                dto.getAge(),
+                dto.getGender(),
+                dto.getMbti(),
+                dto.getBio()
+        ));
+        userRepository.save(user.get());
     }
 }

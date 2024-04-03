@@ -107,8 +107,15 @@ public class UserEntity {
             user.getRoles().add(userRoles);
         }
 
-
-
         return user;
+    }
+
+    public void fixUserData(String userAccount, String user_name, String email, String user_info, String github_url, String portfolio_url) {
+        this.number = number;
+        this.nickname = nickname;
+        this.gender = gender;
+        this.age = age;
+        this.mbti = mbti;
+        this.bio = bio;
     }
 }

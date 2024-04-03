@@ -10,6 +10,7 @@ import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
 import com.mirae.tooktalk.domain.user.security.jwt.JwtUtils;
 import com.mirae.tooktalk.domain.user.security.service.UserDetailsImpl;
 import com.mirae.tooktalk.domain.user.service.user.UserService;
+import com.mirae.tooktalk.domain.user.service.user.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @Tag(name = "유저", description = "유저 관련 api 입니다.")
@@ -33,6 +33,8 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
 
     private final UserService userService;
+
+    private final UserServiceImpl userServiceImpl;
 
     private final UserRepository userRepository;
 
@@ -57,7 +59,7 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
-    @Operation(summary = "마이페이지", description = "토큰을 이용하여 유저 정보를 제공합니다.")
+    @Operation(summary = "프로필", description = "토큰을 이용하여 유저 정보를 조회합니다.")
     @GetMapping("/userinfo")
     public UserEntity provideUserInfo(Authentication authentication) {
         UserEntity userEntity = userRepository.findByNicknameEquals(authentication.getName()).get();
@@ -65,6 +67,14 @@ public class UserController {
         userEntity.hidePassword("");
 
         return userEntity;
+    }
+
+    @Operation(summary = "프로필 수정", description = "유저 정보를 수정합니다.")
+    @PutMapping("/userfix")
+    public void fixUserData(@RequestBody UserEntity dto, Authentication authentication){
+        String userName = authentication.getName();
+        userServiceImpl.fixUserData(dto, userName);
+        ResponseEntity.ok().body("");
     }
 
     /* 인증 및 JWT 토큰 생성 */

@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> user = userRepository.findByNumber(number);
         user.ifPresent(value -> value.fixUserData(
                 dto.getNickname(),
-                dto.getNumber(),
                 dto.getAge(),
                 dto.getGender(),
                 dto.getMbti(),

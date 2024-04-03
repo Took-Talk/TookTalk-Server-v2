@@ -77,7 +77,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Userroles.UserRoles> roles = new HashSet<>();
 
-    private Integer status;
+    public void hidePassword(String password) {
+        this.password = password;
+    }
 
     public static UserEntity registerUser(
             String password,
@@ -99,12 +101,13 @@ public class UserEntity {
         user.mbti = mbti;
         user.interests = interests;
         user.bio = bio;
-        user.status = UserState.ACTIVE.getValue();
 
         for (RoleEntity role : roles) {
             Userroles.UserRoles userRoles = Userroles.UserRoles.createUserRoles(user, role);
             user.getRoles().add(userRoles);
         }
+
+
 
         return user;
     }

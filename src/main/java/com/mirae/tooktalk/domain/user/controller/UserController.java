@@ -21,6 +21,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @Tag(name = "유저", description = "유저 관련 api 입니다.")
@@ -56,11 +57,14 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
-
     @Operation(summary = "마이페이지", description = "토큰을 이용하여 유저 정보를 제공합니다.")
     @GetMapping("/userinfo")
     public UserEntity provideUserInfo(Authentication authentication) {
-        return userRepository.findByNicknameEquals(authentication.getName()).get();
+        UserEntity userEntity = userRepository.findByNicknameEquals(authentication.getName()).get();
+
+        userEntity.hidePassword("");
+
+        return userEntity;
     }
 
     /* 인증 및 JWT 토큰 생성 */

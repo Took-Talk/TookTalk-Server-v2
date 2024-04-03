@@ -110,8 +110,7 @@ public class UserEntity {
         return user;
     }
 
-    public void fixUserData(String userAccount, String user_name, String email, String user_info, String github_url, String portfolio_url) {
-        this.number = number;
+    public void fixUserData(String nickname, String gender, String age, String mbti, String bio) {
         this.nickname = nickname;
         this.gender = gender;
         this.age = age;

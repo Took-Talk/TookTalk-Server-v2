@@ -107,8 +107,12 @@ public class UserEntity {
             user.getRoles().add(userRoles);
         }
 
-
-
         return user;
+    }
+
+    public void fixUserData(String nickname, String mbti, String bio) {
+        this.nickname = nickname;
+        this.mbti = mbti;
+        this.bio = bio;
     }
 }

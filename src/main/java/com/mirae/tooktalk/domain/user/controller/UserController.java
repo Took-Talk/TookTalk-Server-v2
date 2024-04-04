@@ -4,6 +4,7 @@ import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
 import com.mirae.tooktalk.domain.user.exception.CustomException;
 import com.mirae.tooktalk.domain.user.payload.request.LoginRequest;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
+import com.mirae.tooktalk.domain.user.payload.request.UserInfoRequest;
 import com.mirae.tooktalk.domain.user.payload.response.ApiResponse;
 import com.mirae.tooktalk.domain.user.payload.response.JwtResponse;
 import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
@@ -71,9 +72,9 @@ public class UserController {
 
     @Operation(summary = "프로필 수정", description = "유저 정보를 수정합니다.")
     @PutMapping("/userfix")
-    public void fixUserData(@RequestBody UserEntity dto, Authentication authentication){
+    public void fixUserData(@RequestBody UserInfoRequest request, Authentication authentication){
         String userName = authentication.getName();
-        userServiceImpl.fixUserData(dto, userName);
+        userServiceImpl.fixUserData(request, userName);
         ResponseEntity.ok().body("");
     }
 

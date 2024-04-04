@@ -2,7 +2,6 @@ package com.mirae.tooktalk.domain.user.entity.user;
 
 import com.mirae.tooktalk.domain.user.entity.role.RoleEntity;
 import com.mirae.tooktalk.domain.user.entity.userroles.Userroles;
-import com.mirae.tooktalk.domain.user.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

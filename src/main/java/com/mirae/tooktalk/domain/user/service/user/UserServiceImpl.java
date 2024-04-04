@@ -41,8 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void fixUserData(UserInfoRequest request, String number) {
-        Optional<UserEntity> user = userRepository.findByNumber(number);
+    public void fixUserData(UserInfoRequest request, String nickname) {
+        Optional<UserEntity> user = userRepository.findByNicknameEquals(nickname);
+
+        System.out.println(user);
+
         user.ifPresent(value -> {
             value.fixUserData(
                     request.getNickname(),

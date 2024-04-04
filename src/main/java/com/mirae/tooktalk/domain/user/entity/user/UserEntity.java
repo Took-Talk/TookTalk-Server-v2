@@ -110,10 +110,8 @@ public class UserEntity {
         return user;
     }
 
-    public void fixUserData(String nickname, String gender, String age, String mbti, String bio) {
+    public void fixUserData(String nickname, String mbti, String bio) {
         this.nickname = nickname;
-        this.gender = gender;
-        this.age = age;
         this.mbti = mbti;
         this.bio = bio;
     }

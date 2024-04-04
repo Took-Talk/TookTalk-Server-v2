@@ -44,7 +44,7 @@ public class UserController {
     @Operation(summary = "로그인", description = "로그인을 진행합니다.")
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok().body(authenticateAndGenerateJWT(loginRequest.getNumber(), loginRequest.getPassword()));
+        return ResponseEntity.ok().body(userServiceImpl.authenticateAndGenerateJWT(loginRequest.getNumber(), loginRequest.getPassword()));
     }
 
     @Operation(summary = "회원가입", description = "회원가입을 진행합니다.")
@@ -54,7 +54,7 @@ public class UserController {
         /* 유저 등록 */
         userService.registerUser(signupRequest);
 
-        JwtResponse jwtResponse = authenticateAndGenerateJWT(signupRequest.getNumber(), signupRequest.getPassword());
+        JwtResponse jwtResponse = userServiceImpl.authenticateAndGenerateJWT(signupRequest.getNumber(), signupRequest.getPassword());
         ApiResponse<JwtResponse> response = ApiResponse.setApiResponse(true, "회원 가입이 완료 되었습니다!", jwtResponse);
 
         return ResponseEntity.ok().body(response);
@@ -77,20 +77,4 @@ public class UserController {
         userServiceImpl.fixUserData(request, userName);
         ResponseEntity.ok().body("");
     }
-
-    /* 인증 및 JWT 토큰 생성 */
-    private JwtResponse authenticateAndGenerateJWT(String email, String password) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = jwtUtils.generateJwtToken(authentication);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roleNames = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .toList();
-
-        return JwtResponse.setJwtResponse(jwt, (long) userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roleNames);
-    }
-
 }

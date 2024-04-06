@@ -9,7 +9,6 @@ import com.mirae.tooktalk.domain.user.payload.response.ApiResponse;
 import com.mirae.tooktalk.domain.user.payload.response.JwtResponse;
 import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
 import com.mirae.tooktalk.domain.user.security.jwt.JwtUtils;
-import com.mirae.tooktalk.domain.user.security.service.UserDetailsImpl;
 import com.mirae.tooktalk.domain.user.service.user.UserService;
 import com.mirae.tooktalk.domain.user.service.user.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,13 +16,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Tag(name = "유저", description = "유저 관련 api 입니다.")
 @CrossOrigin(origins = "*", maxAge = 3600)

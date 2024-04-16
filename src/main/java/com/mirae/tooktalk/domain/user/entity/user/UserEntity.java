@@ -73,9 +73,6 @@ public class UserEntity {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
-    private int status; // 1 비활 2 활성
-
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Userroles.UserRoles> roles = new HashSet<>();
 
@@ -92,8 +89,7 @@ public class UserEntity {
             String gender,
             List<String> interests,
             String bio,
-            Set<RoleEntity> roles,
-            int status
+            Set<RoleEntity> roles
     ) {
         UserEntity user = new UserEntity();
         user.password = password;
@@ -104,12 +100,12 @@ public class UserEntity {
         user.mbti = mbti;
         user.interests = interests;
         user.bio = bio;
-        user.status = status;
 
         for (RoleEntity role : roles) {
             Userroles.UserRoles userRoles = Userroles.UserRoles.createUserRoles(user, role);
             user.getRoles().add(userRoles);
         }
+
         return user;
     }
 
@@ -117,9 +113,5 @@ public class UserEntity {
         this.nickname = nickname;
         this.mbti = mbti;
         this.bio = bio;
-    }
-
-    public void changeStatus(int status){
-        this.status = status;
     }
 }

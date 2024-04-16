@@ -1,14 +1,11 @@
 package com.mirae.tooktalk.domain.chat.controller;
 
 import com.mirae.tooktalk.domain.chat.dto.ChatMessageDto;
-import com.mirae.tooktalk.domain.user.payload.request.MatchingRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 
 @Controller

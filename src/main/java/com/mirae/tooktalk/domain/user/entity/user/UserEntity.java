@@ -1,5 +1,6 @@
 package com.mirae.tooktalk.domain.user.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mirae.tooktalk.domain.user.entity.role.RoleEntity;
 import com.mirae.tooktalk.domain.user.entity.userroles.Userroles;
 import jakarta.persistence.*;
@@ -63,6 +64,12 @@ public class UserEntity {
     */
     @ElementCollection
     private List<String> interests;
+
+    /*
+        프로필 사진
+    */
+    @Column
+    private String imgUrl;
 
     /*
         자기소개

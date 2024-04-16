@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = UserEntity.registerUser(
                 encoder.encode(signupRequest.getPassword()),signupRequest.getNumber(), signupRequest.getNickname(),
                 signupRequest.getAge(),signupRequest.getMbti(), signupRequest.getGender(),
-                signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole()
+                signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole(), 1
             );
         userRepository.save(user);
     }

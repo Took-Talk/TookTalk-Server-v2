@@ -18,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Tag(name = "유저", description = "유저 관련 api 입니다.")
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -43,10 +46,13 @@ public class UserController {
 
     @Operation(summary = "회원가입", description = "회원가입을 진행합니다.")
     @PostMapping("/signup")
-    public ResponseEntity<?> registerAndAuthenticateUser(@RequestBody SignupRequest signupRequest) throws CustomException {
+    public ResponseEntity<?> registerAndAuthenticateUser(
+            @RequestPart("data") SignupRequest signupRequest,
+            @RequestPart("image") MultipartFile multipartFile
+            ) throws CustomException, IOException {
 
         /* 유저 등록 */
-        userService.registerUser(signupRequest);
+        userService.registerUser(signupRequest, multipartFile);
 
         JwtResponse jwtResponse = userServiceImpl.authenticateAndGenerateJWT(signupRequest.getNumber(), signupRequest.getPassword());
         ApiResponse<JwtResponse> response = ApiResponse.setApiResponse(true, "회원 가입이 완료 되었습니다!", jwtResponse);
@@ -66,9 +72,12 @@ public class UserController {
 
     @Operation(summary = "프로필 수정", description = "유저 정보를 수정합니다.")
     @PutMapping("/userfix")
-    public void fixUserData(@RequestBody UserInfoRequest request, Authentication authentication){
+    public void fixUserData(
+            @RequestPart("data") UserInfoRequest request,
+            @RequestPart("image") MultipartFile multipartFile,
+            Authentication authentication) throws IOException {
         String userName = authentication.getName();
-        userServiceImpl.fixUserData(request, userName);
+        userServiceImpl.fixUserData(request, userName, multipartFile);
         ResponseEntity.ok().body("");
     }
 }

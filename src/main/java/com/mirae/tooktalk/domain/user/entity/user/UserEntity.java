@@ -100,7 +100,8 @@ public class UserEntity {
             List<String> interests,
             String bio,
             Set<RoleEntity> roles,
-            int status
+            int status,
+            String imgUrl
     ) {
         UserEntity user = new UserEntity();
         user.password = password;
@@ -112,6 +113,7 @@ public class UserEntity {
         user.interests = interests;
         user.bio = bio;
         user.status = status;
+        user.imgUrl = imgUrl;
 
         for (RoleEntity role : roles) {
             Userroles.UserRoles userRoles = Userroles.UserRoles.createUserRoles(user, role);
@@ -128,5 +130,9 @@ public class UserEntity {
 
     public void changeStatus(int status){
         this.status = status;
+    }
+
+    public void fixImage(String imgUrl){
+        this.imgUrl = imgUrl;
     }
 }

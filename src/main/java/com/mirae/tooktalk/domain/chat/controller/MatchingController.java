@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "매칭", description = "매 관련 API")
+@Tag(name = "매칭", description = "매칭 관련 API")
 public class MatchingController {
     private final MatchingService matchingService;
 

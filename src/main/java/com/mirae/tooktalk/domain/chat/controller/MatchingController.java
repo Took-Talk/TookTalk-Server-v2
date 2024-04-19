@@ -19,7 +19,7 @@ public class MatchingController {
 
     @Operation(summary = "mbti 매칭", description = "mbti로 유저를 매칭합니다.")
     @PostMapping("/matching/{mbti}")
-    public Map<String, Integer> matching(
+    public Map<String, Object> matching(
             Authentication authentication,
             @PathVariable String mbti
     ){

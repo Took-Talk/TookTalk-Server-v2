@@ -62,37 +62,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void fixUserData(UserInfoRequest request, String nickname, MultipartFile multipartFile) throws IOException {
+    public void fixUserData(UserInfoRequest request, String nickname, MultipartFile multipartFile){
         Optional<UserEntity> user = userRepository.findByNicknameEquals(nickname);
 
-        if (multipartFile.isEmpty()){
-            user.ifPresent(value -> {
-                value.fixUserData(
-                        request.getNickname(),
-                        request.getMbti(),
-                        request.getBio()
-                );
-                userRepository.save(value);
-            });
-        } else {
-            String url = s3Uploader.upload(multipartFile, "image");
-            user.ifPresent(value -> {
-                value.fixUserData(
-                        request.getNickname(),
-                        request.getMbti(),
-                        request.getBio()
-                );
+        user.ifPresent(value -> {
+            value.fixUserData(
+                    request.getNickname(),
+                    request.getMbti(),
+                    request.getBio()
+            );
+
+            if (!multipartFile.isEmpty()) {
+                String url = null;
+                try {
+                    url = s3Uploader.upload(multipartFile, "image");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 value.fixImage(url);
-                userRepository.save(value);
-            });
-
-        }
-
-
-
-
-
-
+            }
+            userRepository.save(value);
+        });
     }
 
     /* 인증 및 JWT 토큰 생성 */

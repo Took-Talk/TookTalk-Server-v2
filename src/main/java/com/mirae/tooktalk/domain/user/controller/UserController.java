@@ -28,15 +28,12 @@ import java.io.IOException;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class UserController {
-    private final AuthenticationManager authenticationManager;
 
     private final UserService userService;
 
     private final UserServiceImpl userServiceImpl;
 
     private final UserRepository userRepository;
-
-    private final JwtUtils jwtUtils;
 
     @Operation(summary = "로그인", description = "로그인을 진행합니다.")
     @PostMapping("/signin")

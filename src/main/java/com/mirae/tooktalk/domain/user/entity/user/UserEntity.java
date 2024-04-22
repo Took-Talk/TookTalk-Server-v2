@@ -128,10 +128,6 @@ public class UserEntity {
         this.bio = bio;
     }
 
-    public void changeStatus(int status){
-        this.status = status;
-    }
-
     public void fixImage(String imgUrl){
         this.imgUrl = imgUrl;
     }

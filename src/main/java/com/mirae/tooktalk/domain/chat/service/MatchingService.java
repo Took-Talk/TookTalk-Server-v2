@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 @RequiredArgsConstructor
 public class MatchingService {
@@ -17,12 +19,35 @@ public class MatchingService {
     private final MatchingRepository matchingRepository;
 
     public MatchingResponse matching(Authentication authentication, String mbti){
-        UserEntity user = userRepository.findByNicknameEquals(authentication.getName()).get();
+        UserEntity user = findUserByNickname(authentication.getName());
+        MatchingUserEntity matchingUserEntity = findMatchingUserByMbti(mbti);
+
+        return handleMatchingResult(user, matchingUserEntity, mbti);
+    }
+
+    /* nickname으로 유저 검색 */
+    private UserEntity findUserByNickname(String nickname) {
+        UserEntity user = userRepository.findByNicknameEquals(nickname)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+        hideUserPassword(user);
+        return user;
+    }
+
+    /* 유저 정보 반환 시 패스워드 공백 처리 */
+    private void hideUserPassword(UserEntity user) {
         user.hidePassword("");
-        MatchingUserEntity matchingUserEntity = matchingRepository.findByMbti(mbti);
-        if (matchingUserEntity == null){
+    }
+
+    /* mbti로 유저 매칭 */
+    private MatchingUserEntity findMatchingUserByMbti(String mbti) {
+        return matchingRepository.findByMbti(mbti);
+    }
+
+    /* 매칭 결과 처리 */
+    private MatchingResponse handleMatchingResult(UserEntity user, MatchingUserEntity matchingUserEntity, String mbti) {
+        if (matchingUserEntity == null) {
             return addWaitingList(user, mbti);
-        } else{
+        } else {
             return removeFromWaitingList(user, matchingUserEntity);
         }
     }

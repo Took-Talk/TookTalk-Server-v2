@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
                 encoder.encode(signupRequest.getPassword()),signupRequest.getNumber(), signupRequest.getNickname(),
                 signupRequest.getAge(),signupRequest.getMbti(), signupRequest.getGender(),
                 signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole(), 1, url
-            );
+        );
         userRepository.save(user);
     }
 
@@ -72,22 +72,26 @@ public class UserServiceImpl implements UserService {
                     request.getBio()
             );
 
-            updateUserImage(value, multipartFile);
+            fixImage(value, multipartFile);
 
             userRepository.save(value);
         });
     }
 
-    private void updateUserImage(UserEntity user, MultipartFile multipartFile) {
+    private String updateUserImage(MultipartFile multipartFile) {
+        String url = "";
         if (!multipartFile.isEmpty()) {
-            String url;
             try {
                 url = s3Uploader.upload(multipartFile, "image");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            user.fixImage(url);
         }
+        return url;
+    }
+
+    private void fixImage(UserEntity user, MultipartFile multipartFile) {
+        user.fixImage(updateUserImage(multipartFile));
     }
 
     /* 인증 및 JWT 토큰 생성 */

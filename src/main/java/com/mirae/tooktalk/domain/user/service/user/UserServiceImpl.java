@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
     private void updateUserImage(UserEntity user, MultipartFile multipartFile) {
         if (!multipartFile.isEmpty()) {
-            String url = null;
+            String url;
             try {
                 url = s3Uploader.upload(multipartFile, "image");
             } catch (IOException e) {

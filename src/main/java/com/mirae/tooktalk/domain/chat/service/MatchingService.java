@@ -19,18 +19,11 @@ public class MatchingService {
     private final MatchingRepository matchingRepository;
 
     public MatchingResponse matching(Authentication authentication, String mbti){
-        UserEntity user = findUserByNickname(authentication.getName());
+        UserEntity user = UserEntity.findUserByNickname(userRepository, authentication.getName());
+        hideUserPassword(user);
         MatchingUserEntity matchingUserEntity = findMatchingUserByMbti(mbti);
 
         return handleMatchingResult(user, matchingUserEntity, mbti);
-    }
-
-    /* nickname으로 유저 검색 */
-    private UserEntity findUserByNickname(String nickname) {
-        UserEntity user = userRepository.findByNicknameEquals(nickname)
-                .orElseThrow(() -> new NoSuchElementException("User not found"));
-        hideUserPassword(user);
-        return user;
     }
 
     /* 유저 정보 반환 시 패스워드 공백 처리 */
@@ -47,9 +40,8 @@ public class MatchingService {
     private MatchingResponse handleMatchingResult(UserEntity user, MatchingUserEntity matchingUserEntity, String mbti) {
         if (matchingUserEntity == null) {
             return addWaitingList(user, mbti);
-        } else {
-            return removeFromWaitingList(user, matchingUserEntity);
         }
+        return removeFromWaitingList(user, matchingUserEntity);
     }
 
     /* 해당하는 유저가 없을 경우 대기열에 추가하는 메서드 */

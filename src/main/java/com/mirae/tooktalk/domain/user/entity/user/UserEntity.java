@@ -1,18 +1,17 @@
 package com.mirae.tooktalk.domain.user.entity.user;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mirae.tooktalk.domain.user.entity.role.RoleEntity;
 import com.mirae.tooktalk.domain.user.entity.userroles.Userroles;
-import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Entity
@@ -124,13 +123,6 @@ public class UserEntity {
         return user;
     }
 
-    /* nickname으로 유저 검색 */
-    public static UserEntity findUserByNickname(UserRepository userRepository, String nickname) {
-        UserEntity user = userRepository.findByNicknameEquals(nickname)
-                .orElseThrow(() -> new NoSuchElementException("User not found"));
-        return user;
-    }
-
     public void fixUserData(String nickname, String mbti, String bio) {
         this.nickname = nickname;
         this.mbti = mbti;
@@ -139,5 +131,10 @@ public class UserEntity {
 
     public void fixImage(String imgUrl){
         this.imgUrl = imgUrl;
+    }
+
+    /* 유저 정보 반환 시 패스워드 공백 처리 */
+    public static void hideUserPassword(UserEntity user) {
+        user.hidePassword("");
     }
 }

@@ -19,16 +19,18 @@ public class MatchingService {
     private final MatchingRepository matchingRepository;
 
     public MatchingResponse matching(Authentication authentication, String mbti){
-        UserEntity user = UserEntity.findUserByNickname(userRepository, authentication.getName());
-        hideUserPassword(user);
+        UserEntity user = findUserByNickname(authentication.getName());
+        UserEntity.hideUserPassword(user);
         MatchingUserEntity matchingUserEntity = findMatchingUserByMbti(mbti);
 
         return handleMatchingResult(user, matchingUserEntity, mbti);
     }
 
-    /* 유저 정보 반환 시 패스워드 공백 처리 */
-    private void hideUserPassword(UserEntity user) {
-        user.hidePassword("");
+    /* nickname으로 유저 검색 */
+    private UserEntity findUserByNickname(String nickname) {
+        UserEntity user = userRepository.findByNicknameEquals(nickname)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+        return user;
     }
 
     /* mbti로 유저 매칭 */

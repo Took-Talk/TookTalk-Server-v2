@@ -72,17 +72,22 @@ public class UserServiceImpl implements UserService {
                     request.getBio()
             );
 
-            if (!multipartFile.isEmpty()) {
-                String url = null;
-                try {
-                    url = s3Uploader.upload(multipartFile, "image");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                value.fixImage(url);
-            }
+            updateUserImage(value, multipartFile);
+
             userRepository.save(value);
         });
+    }
+
+    private void updateUserImage(UserEntity user, MultipartFile multipartFile) {
+        if (!multipartFile.isEmpty()) {
+            String url = null;
+            try {
+                url = s3Uploader.upload(multipartFile, "image");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            user.fixImage(url);
+        }
     }
 
     /* 인증 및 JWT 토큰 생성 */

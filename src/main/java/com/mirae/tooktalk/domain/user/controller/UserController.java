@@ -74,7 +74,7 @@ public class UserController {
             @RequestPart("image") MultipartFile multipartFile,
             Authentication authentication) throws IOException {
         String userName = authentication.getName();
-        userServiceImpl.fixUserData(request, userName, multipartFile);
+        userServiceImpl.updateUserData(request, userName, multipartFile);
         ResponseEntity.ok().body("");
     }
 }

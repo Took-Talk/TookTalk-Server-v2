@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void fixUserData(UserInfoRequest request, String nickname, MultipartFile multipartFile){
+    public void updateUserData(UserInfoRequest request, String nickname, MultipartFile multipartFile){
         Optional<UserEntity> user = userRepository.findByNicknameEquals(nickname);
 
         user.ifPresent(value -> {

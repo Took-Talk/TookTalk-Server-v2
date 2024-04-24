@@ -20,7 +20,6 @@ public class MatchingService {
 
     public MatchingResponse matching(Authentication authentication, String mbti){
         UserEntity user = findUserByNickname(authentication.getName());
-        user.hideUserPassword();
         MatchingUserEntity matchingUserEntity = findMatchingUserByMbti(mbti);
 
         return handleMatchingResult(user, matchingUserEntity, mbti);
@@ -30,6 +29,8 @@ public class MatchingService {
     private UserEntity findUserByNickname(String nickname) {
         UserEntity user = userRepository.findByNicknameEquals(nickname)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
+        user.hideUserPassword();
+
         return user;
     }
 

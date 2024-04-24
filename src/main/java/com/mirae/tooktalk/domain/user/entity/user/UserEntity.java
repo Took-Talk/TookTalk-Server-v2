@@ -134,7 +134,7 @@ public class UserEntity {
     }
 
     /* 유저 정보 반환 시 패스워드 공백 처리 */
-    public void hideUserPassword(UserEntity user) {
-        user.hidePassword("");
+    public void hideUserPassword() {
+        this.password = "";
     }
 }

@@ -20,7 +20,7 @@ public class MatchingService {
 
     public MatchingResponse matching(Authentication authentication, String mbti){
         UserEntity user = findUserByNickname(authentication.getName());
-        user.hideUserPassword(user);
+        user.hideUserPassword();
         MatchingUserEntity matchingUserEntity = findMatchingUserByMbti(mbti);
 
         return handleMatchingResult(user, matchingUserEntity, mbti);

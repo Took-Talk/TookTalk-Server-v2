@@ -73,17 +73,13 @@ public class UserServiceImpl implements UserService {
             );
 
             try {
-                uploadUserImage(value, multipartFile);
+                value.fixImage(s3Uploader.upload(multipartFile,"profile pic"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             userRepository.save(value);
         });
-    }
-
-    private void uploadUserImage(UserEntity user, MultipartFile multipartFile) throws IOException {
-        user.fixImage(s3Uploader.upload(multipartFile, "profile pic"));
     }
 
     /* 인증 및 JWT 토큰 생성 */

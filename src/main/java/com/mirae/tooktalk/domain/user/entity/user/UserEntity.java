@@ -123,10 +123,11 @@ public class UserEntity {
         return user;
     }
 
-    public void fixUserData(String nickname, String mbti, String bio) {
+    public void fixUserData(String nickname, String mbti, String bio, String imgUrl) {
         this.nickname = nickname;
         this.mbti = mbti;
         this.bio = bio;
+        this.imgUrl = imgUrl;
     }
 
     public void fixImage(String imgUrl){

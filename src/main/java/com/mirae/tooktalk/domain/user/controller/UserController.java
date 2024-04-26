@@ -8,14 +8,12 @@ import com.mirae.tooktalk.domain.user.payload.request.UserInfoRequest;
 import com.mirae.tooktalk.domain.user.payload.response.ApiResponse;
 import com.mirae.tooktalk.domain.user.payload.response.JwtResponse;
 import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
-import com.mirae.tooktalk.domain.user.security.jwt.JwtUtils;
 import com.mirae.tooktalk.domain.user.service.user.UserService;
 import com.mirae.tooktalk.domain.user.service.user.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,11 +68,10 @@ public class UserController {
     @Operation(summary = "프로필 수정", description = "유저 정보를 수정합니다.")
     @PutMapping("/userfix")
     public void fixUserData(
-            @RequestPart("data") UserInfoRequest request,
-            @RequestPart("image") MultipartFile multipartFile,
-            Authentication authentication) throws IOException {
+            @RequestBody UserInfoRequest userInfoRequest,
+            Authentication authentication) {
         String userName = authentication.getName();
-        userServiceImpl.updateUserData(request, userName, multipartFile);
+        userServiceImpl.updateUserData(userInfoRequest, userName);
         ResponseEntity.ok().body("");
     }
 }

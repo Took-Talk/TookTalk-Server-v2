@@ -62,21 +62,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void updateUserData(UserInfoRequest request, String nickname, MultipartFile multipartFile){
+    public void updateUserData(UserInfoRequest request, String nickname){
         Optional<UserEntity> user = userRepository.findByNicknameEquals(nickname);
 
         user.ifPresent(value -> {
             value.fixUserData(
                     request.getNickname(),
                     request.getMbti(),
-                    request.getBio()
+                    request.getBio(),
+                    request.getImgUrl()
             );
-
-            try {
-                value.fixImage(s3Uploader.upload(multipartFile,"profile pic"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             userRepository.save(value);
         });

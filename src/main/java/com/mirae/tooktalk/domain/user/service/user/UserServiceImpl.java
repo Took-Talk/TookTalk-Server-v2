@@ -19,7 +19,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void registerUser(SignupRequest signupRequest, MultipartFile multipartFile) throws CustomException, IOException {
+    public void registerUser(SignupRequest signupRequest) throws CustomException, IOException {
         if (userRepository.existsByNumber(signupRequest.getNumber())) {
             throw new CustomException("이미 사용중인 전화번호 입니다.");
         }
@@ -51,12 +50,10 @@ public class UserServiceImpl implements UserService {
             throw new CustomException("이미 사용중인 닉네임 입니다.");
         }
 
-        String url = s3Uploader.upload(multipartFile, "image");
-
         UserEntity user = UserEntity.registerUser(
                 encoder.encode(signupRequest.getPassword()),signupRequest.getNumber(), signupRequest.getNickname(),
                 signupRequest.getAge(),signupRequest.getMbti(), signupRequest.getGender(),
-                signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole(), 1, url
+                signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole(), 1, signupRequest.getImgUrl()
         );
         userRepository.save(user);
     }

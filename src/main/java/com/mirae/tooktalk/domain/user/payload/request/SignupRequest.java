@@ -24,4 +24,6 @@ public class SignupRequest {
     private List<String> interests;
 
     private String bio;
+
+    private String imgUrl;
 }

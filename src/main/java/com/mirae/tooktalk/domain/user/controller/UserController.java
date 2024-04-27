@@ -42,12 +42,11 @@ public class UserController {
     @Operation(summary = "회원가입", description = "회원가입을 진행합니다.")
     @PostMapping("/signup")
     public ResponseEntity<?> registerAndAuthenticateUser(
-            @RequestPart("data") SignupRequest signupRequest,
-            @RequestPart("image") MultipartFile multipartFile
+            @RequestBody SignupRequest signupRequest
             ) throws CustomException, IOException {
 
         /* 유저 등록 */
-        userService.registerUser(signupRequest, multipartFile);
+        userService.registerUser(signupRequest);
 
         JwtResponse jwtResponse = userServiceImpl.authenticateAndGenerateJWT(signupRequest.getNumber(), signupRequest.getPassword());
         ApiResponse<JwtResponse> response = ApiResponse.setApiResponse(true, "회원 가입이 완료 되었습니다!", jwtResponse);

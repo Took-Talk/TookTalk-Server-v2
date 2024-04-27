@@ -9,7 +9,6 @@ import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
 import com.mirae.tooktalk.domain.user.security.jwt.JwtUtils;
 import com.mirae.tooktalk.domain.user.security.service.UserDetailsImpl;
 import com.mirae.tooktalk.domain.user.service.role.RoleService;
-import com.mirae.tooktalk.global.common.S3.S3Uploader;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,11 +36,9 @@ public class UserServiceImpl implements UserService {
 
     private final JwtUtils jwtUtils;
 
-    private final S3Uploader s3Uploader;
-
     @Override
     @Transactional
-    public void registerUser(SignupRequest signupRequest) throws CustomException, IOException {
+    public void registerUser(SignupRequest signupRequest) throws CustomException {
         if (userRepository.existsByNumber(signupRequest.getNumber())) {
             throw new CustomException("이미 사용중인 전화번호 입니다.");
         }

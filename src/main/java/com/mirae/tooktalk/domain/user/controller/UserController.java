@@ -1,7 +1,7 @@
 package com.mirae.tooktalk.domain.user.controller;
 
 import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
-import com.mirae.tooktalk.domain.user.exception.CustomException;
+import com.mirae.tooktalk.domain.user.exception.BusinessException;
 import com.mirae.tooktalk.domain.user.payload.request.LoginRequest;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 import com.mirae.tooktalk.domain.user.payload.request.UserInfoRequest;
@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -43,7 +42,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerAndAuthenticateUser(
             @RequestBody SignupRequest signupRequest
-            ) throws CustomException, IOException {
+            ) throws BusinessException, IOException {
 
         /* 유저 등록 */
         userService.registerUser(signupRequest);

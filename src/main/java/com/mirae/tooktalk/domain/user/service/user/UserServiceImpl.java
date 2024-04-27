@@ -1,7 +1,8 @@
 package com.mirae.tooktalk.domain.user.service.user;
 
 import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
-import com.mirae.tooktalk.domain.user.exception.CustomException;
+import com.mirae.tooktalk.domain.user.exception.BusinessException;
+import com.mirae.tooktalk.domain.user.exception.error.ErrorCode;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 import com.mirae.tooktalk.domain.user.payload.request.UserInfoRequest;
 import com.mirae.tooktalk.domain.user.payload.response.JwtResponse;
@@ -38,12 +39,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void registerUser(SignupRequest signupRequest) throws CustomException {
+    public void registerUser(SignupRequest signupRequest) throws BusinessException {
         if (userRepository.existsByNumber(signupRequest.getNumber())) {
-            throw new CustomException("이미 사용중인 전화번호 입니다.");
+            throw new BusinessException(ErrorCode.NUMBER_BAD_REQUEST);
         }
         if (userRepository.existsByNickname(signupRequest.getNickname())) {
-            throw new CustomException("이미 사용중인 닉네임 입니다.");
+            throw new BusinessException(ErrorCode.NiCKNAME_BAD_REQUEST);
         }
 
         UserEntity user = UserEntity.registerUser(

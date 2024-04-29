@@ -4,14 +4,10 @@ import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
 import lombok.Builder;
 
 @Builder
-public class MatchingResponse {
+public record MatchingResponse (
+        int roomId,
 
-    private int roomId;
+        UserEntity userInfo,
 
-    private UserEntity userInfo;
-
-    private boolean matching;
-
-
-
-}
+        boolean matching
+){}

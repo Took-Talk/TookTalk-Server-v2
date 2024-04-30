@@ -1,7 +1,7 @@
 package com.mirae.tooktalk.domain.user.service.user;
 
 
-import com.mirae.tooktalk.domain.user.exception.BusinessException;
+import com.mirae.tooktalk.global.exception.BusinessException;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 
 import java.io.IOException;

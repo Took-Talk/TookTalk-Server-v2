@@ -1,8 +1,8 @@
 package com.mirae.tooktalk.domain.user.service.user;
 
 import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
-import com.mirae.tooktalk.domain.user.exception.BusinessException;
-import com.mirae.tooktalk.domain.user.exception.error.ErrorCode;
+import com.mirae.tooktalk.global.exception.BusinessException;
+import com.mirae.tooktalk.global.exception.error.ErrorCode;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 import com.mirae.tooktalk.domain.user.payload.request.UserInfoRequest;
 import com.mirae.tooktalk.domain.user.payload.response.JwtResponse;

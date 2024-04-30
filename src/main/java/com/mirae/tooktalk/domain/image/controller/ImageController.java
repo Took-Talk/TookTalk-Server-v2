@@ -1,7 +1,7 @@
 package com.mirae.tooktalk.domain.image.controller;
 
 import com.mirae.tooktalk.domain.image.service.ImageService;
-import com.mirae.tooktalk.global.common.S3.dto.ImageDTO;
+import com.mirae.tooktalk.domain.image.dto.ImageDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

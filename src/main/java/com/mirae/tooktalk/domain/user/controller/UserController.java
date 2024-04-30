@@ -1,7 +1,7 @@
 package com.mirae.tooktalk.domain.user.controller;
 
 import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
-import com.mirae.tooktalk.domain.user.exception.BusinessException;
+import com.mirae.tooktalk.global.exception.BusinessException;
 import com.mirae.tooktalk.domain.user.payload.request.LoginRequest;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 import com.mirae.tooktalk.domain.user.payload.request.UserInfoRequest;

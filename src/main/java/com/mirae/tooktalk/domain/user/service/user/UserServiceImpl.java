@@ -21,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,18 +56,15 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public void updateUserData(UserInfoRequest request, String nickname){
-        Optional<UserEntity> user = userRepository.findByNicknameEquals(nickname);
+        UserEntity user = userRepository.findByNicknameEquals(nickname)
+                .orElseThrow(()-> new BusinessException(ErrorCode.NOT_FOUND));
 
-        user.ifPresent(value -> {
-            value.fixUserData(
-                    request.getNickname(),
+        user.fixUserData(
+                request.getNickname(),
                     request.getMbti(),
                     request.getBio(),
                     request.getImgUrl()
-            );
-
-            userRepository.save(value);
-        });
+        );
     }
 
     /* 인증 및 JWT 토큰 생성 */

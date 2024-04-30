@@ -1,7 +1,7 @@
 package com.mirae.tooktalk.domain.image.controller;
 
 import com.mirae.tooktalk.domain.image.service.ImageService;
-import com.mirae.tooktalk.global.common.S3.dto.S3Dto;
+import com.mirae.tooktalk.global.common.S3.dto.ImageDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class ImageController {
 
     @Operation(summary = "업로드", description = "파일을 업로드 합니다.")
     @PostMapping("/upload")
-    public ResponseEntity<S3Dto> uploadImage(@RequestPart("image") MultipartFile multipartFile) {
+    public ResponseEntity<ImageDTO> uploadImage(@RequestPart("image") MultipartFile multipartFile) {
         return ResponseEntity.ok().body(imageService.uploadImage(multipartFile));
     }
 }

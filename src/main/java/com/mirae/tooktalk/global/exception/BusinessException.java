@@ -1,6 +1,6 @@
-package com.mirae.tooktalk.domain.user.exception;
+package com.mirae.tooktalk.global.exception;
 
-import com.mirae.tooktalk.domain.user.exception.error.ErrorProperty;
+import com.mirae.tooktalk.global.exception.error.ErrorProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

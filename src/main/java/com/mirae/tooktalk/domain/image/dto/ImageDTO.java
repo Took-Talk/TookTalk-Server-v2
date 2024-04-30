@@ -1,4 +1,4 @@
-package com.mirae.tooktalk.global.common.S3.dto;
+package com.mirae.tooktalk.domain.image.dto;
 
 import lombok.Builder;
 

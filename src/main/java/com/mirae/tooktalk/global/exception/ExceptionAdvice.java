@@ -1,4 +1,4 @@
-package com.mirae.tooktalk.domain.user.exception;
+package com.mirae.tooktalk.global.exception;
 
 import lombok.Builder;
 import org.springframework.http.ResponseEntity;

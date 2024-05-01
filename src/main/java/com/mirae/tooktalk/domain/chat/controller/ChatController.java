@@ -1,7 +1,7 @@
 package com.mirae.tooktalk.domain.chat.controller;
 
-import com.mirae.tooktalk.domain.chat.dto.ChatEnterDto;
-import com.mirae.tooktalk.domain.chat.dto.ChatMessageDto;
+import com.mirae.tooktalk.domain.chat.dto.request.ChatEnterDto;
+import com.mirae.tooktalk.domain.chat.dto.request.ChatMessageDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

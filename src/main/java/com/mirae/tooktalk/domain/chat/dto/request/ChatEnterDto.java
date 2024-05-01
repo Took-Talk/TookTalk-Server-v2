@@ -1,4 +1,4 @@
-package com.mirae.tooktalk.domain.chat.dto;
+package com.mirae.tooktalk.domain.chat.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

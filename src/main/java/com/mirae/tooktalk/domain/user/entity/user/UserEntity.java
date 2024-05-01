@@ -1,10 +1,11 @@
 package com.mirae.tooktalk.domain.user.entity.user;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mirae.tooktalk.domain.user.entity.role.RoleEntity;
 import com.mirae.tooktalk.domain.user.entity.userroles.Userroles;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -122,17 +123,19 @@ public class UserEntity {
         return user;
     }
 
-    public void fixUserData(String nickname, String mbti, String bio) {
+    public void fixUserData(String nickname, String mbti, String bio, String imgUrl) {
         this.nickname = nickname;
         this.mbti = mbti;
         this.bio = bio;
-    }
-
-    public void changeStatus(int status){
-        this.status = status;
+        this.imgUrl = imgUrl;
     }
 
     public void fixImage(String imgUrl){
         this.imgUrl = imgUrl;
+    }
+
+    /* 유저 정보 반환 시 패스워드 공백 처리 */
+    public void hideUserPassword() {
+        this.password = "";
     }
 }

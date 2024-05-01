@@ -6,10 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserInfoRequest {
-
     private String nickname;
-
     private String mbti;
-
     private String bio;
+    private String imgUrl;
 }

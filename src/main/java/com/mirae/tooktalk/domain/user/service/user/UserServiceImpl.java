@@ -1,7 +1,8 @@
 package com.mirae.tooktalk.domain.user.service.user;
 
 import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
-import com.mirae.tooktalk.domain.user.exception.CustomException;
+import com.mirae.tooktalk.global.exception.BusinessException;
+import com.mirae.tooktalk.global.exception.error.ErrorCode;
 import com.mirae.tooktalk.domain.user.payload.request.SignupRequest;
 import com.mirae.tooktalk.domain.user.payload.request.UserInfoRequest;
 import com.mirae.tooktalk.domain.user.payload.response.JwtResponse;
@@ -20,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -38,35 +38,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void registerUser(SignupRequest signupRequest) throws CustomException {
+    public void registerUser(SignupRequest signupRequest) throws BusinessException {
         if (userRepository.existsByNumber(signupRequest.getNumber())) {
-            throw new CustomException("이미 사용중인 전화번호 입니다.");
+            throw new BusinessException(ErrorCode.NUMBER_BAD_REQUEST);
         }
         if (userRepository.existsByNickname(signupRequest.getNickname())) {
-            throw new CustomException("이미 사용중인 닉네임 입니다.");
+            throw new BusinessException(ErrorCode.NiCKNAME_BAD_REQUEST);
         }
+
         UserEntity user = UserEntity.registerUser(
                 encoder.encode(signupRequest.getPassword()),signupRequest.getNumber(), signupRequest.getNickname(),
                 signupRequest.getAge(),signupRequest.getMbti(), signupRequest.getGender(),
-                signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole(), 1
-            );
+                signupRequest.getInterests(), signupRequest.getBio(), roleService.getDefaultRole(), 1, signupRequest.getImgUrl()
+        );
         userRepository.save(user);
     }
 
     @Transactional
-    public void fixUserData(UserInfoRequest request, String nickname) {
-        Optional<UserEntity> user = userRepository.findByNicknameEquals(nickname);
+    public void updateUserData(UserInfoRequest request, String nickname){
+        UserEntity user = userRepository.findByNicknameEquals(nickname)
+                .orElseThrow(()-> new BusinessException(ErrorCode.NOT_FOUND));
 
-        System.out.println(user);
-
-        user.ifPresent(value -> {
-            value.fixUserData(
-                    request.getNickname(),
+        user.fixUserData(
+                request.getNickname(),
                     request.getMbti(),
-                    request.getBio()
-            );
-            userRepository.save(value);
-        });
+                    request.getBio(),
+                    request.getImgUrl()
+        );
     }
 
     /* 인증 및 JWT 토큰 생성 */

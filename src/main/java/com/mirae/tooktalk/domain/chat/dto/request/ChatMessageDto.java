@@ -1,4 +1,4 @@
-package com.mirae.tooktalk.domain.chat.dto;
+package com.mirae.tooktalk.domain.chat.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ChatMessageDto {
     private String roomId;
-    private String writer;
+    private String nickname;
     private String message;
-    private String timestamp;
+    private String imgUrl;
 }

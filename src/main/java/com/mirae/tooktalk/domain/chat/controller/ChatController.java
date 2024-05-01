@@ -1,6 +1,7 @@
 package com.mirae.tooktalk.domain.chat.controller;
 
-import com.mirae.tooktalk.domain.chat.dto.ChatMessageDto;
+import com.mirae.tooktalk.domain.chat.dto.request.ChatEnterDto;
+import com.mirae.tooktalk.domain.chat.dto.request.ChatMessageDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,8 @@ public class ChatController {
 
     @Operation(summary = "채팅방 입장", description = "채팅 방에 입장합니다.")
     @MessageMapping("/chat/enter")
-    public void enterChatRoom(ChatMessageDto message) {
+    public void enterChatRoom(ChatEnterDto message) {
+        message.setMessage(message.getNickname() + "님이 입장하셨습니다.");
         template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 

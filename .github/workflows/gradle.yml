@@ -54,5 +54,5 @@ jobs:
             sudo docker stop tooktalk
             sudo docker rm tooktalk
             sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/tooktalk:0.0.1-SNAPSHOT
-            docker pull ${{ secrets.DOCKER_USERNAME }}/tooktalk-server-v2:0.0.1-SNAPSHOT
-            docker run -d -p 8080:8080 --name keep ${{ secrets.DOCKER_USERNAME }}/tooktalk-server-v2:0.0.1-SNAPSHOT
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/tooktalk:0.0.1-SNAPSHOT
+            sudo docker run -d -p 8080:8080 --name keep ${{ secrets.DOCKER_USERNAME }}/tooktalk:0.0.1-SNAPSHOT

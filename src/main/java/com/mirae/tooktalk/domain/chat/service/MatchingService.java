@@ -4,6 +4,7 @@ import com.mirae.tooktalk.domain.chat.dto.response.MatchingResponse;
 import com.mirae.tooktalk.domain.chat.entity.MatchingUserEntity;
 import com.mirae.tooktalk.domain.chat.repository.MatchingRepository;
 import com.mirae.tooktalk.domain.user.entity.user.UserEntity;
+import com.mirae.tooktalk.domain.user.payload.response.UserDto;
 import com.mirae.tooktalk.domain.user.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -19,19 +20,28 @@ public class MatchingService {
     private final MatchingRepository matchingRepository;
 
     public MatchingResponse matching(Authentication authentication, String mbti){
-        UserEntity user = findUserByNickname(authentication.getName());
+        UserDto user = findUserByNickname(authentication.getName());
         MatchingUserEntity matchingUserEntity = findMatchingUserByMbti(mbti);
 
         return handleMatchingResult(user, matchingUserEntity, mbti);
     }
 
     /* nickname으로 유저 검색 */
-    private UserEntity findUserByNickname(String nickname) {
+    private UserDto findUserByNickname(String nickname) {
         UserEntity user = userRepository.findByNicknameEquals(nickname)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
-        user.hideUserPassword();
 
-        return user;
+
+
+        return UserDto.builder()
+                .id(user.getId())
+                .number(user.getNumber())
+                .nickname(user.getNickname())
+                .age(user.getAge())
+                .gender(user.getGender())
+                .mbti(user.getMbti())
+                .interests(user.getInterests())
+                .build();
     }
 
     /* mbti로 유저 매칭 */
@@ -40,7 +50,7 @@ public class MatchingService {
     }
 
     /* 매칭 결과 처리 */
-    private MatchingResponse handleMatchingResult(UserEntity user, MatchingUserEntity matchingUserEntity, String mbti) {
+    private MatchingResponse handleMatchingResult(UserDto user, MatchingUserEntity matchingUserEntity, String mbti) {
         if (matchingUserEntity == null) {
             return addWaitingList(user, mbti);
         }
@@ -48,7 +58,7 @@ public class MatchingService {
     }
 
     /* 해당하는 유저가 없을 경우 대기열에 추가하는 메서드 */
-    private MatchingResponse addWaitingList(UserEntity user, String mbti) {
+    private MatchingResponse addWaitingList(UserDto user, String mbti) {
         int roomId = matchingRepository.save(
                 MatchingUserEntity.builder()
                         .userId(user.getId())
@@ -64,7 +74,7 @@ public class MatchingService {
     }
 
     /* 매칭 시 본인 데이터를 대기열에서 지우는 메서드 */
-    private MatchingResponse removeFromWaitingList(UserEntity user, MatchingUserEntity matchingUserEntity) {
+    private MatchingResponse removeFromWaitingList(UserDto user, MatchingUserEntity matchingUserEntity) {
         matchingRepository.delete(matchingUserEntity);
 
         return MatchingResponse.builder()

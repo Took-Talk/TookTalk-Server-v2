@@ -129,13 +129,4 @@ public class UserEntity {
         this.bio = bio;
         this.imgUrl = imgUrl;
     }
-
-    public void fixImage(String imgUrl){
-        this.imgUrl = imgUrl;
-    }
-
-    /* 유저 정보 반환 시 패스워드 공백 처리 */
-    public void hideUserPassword() {
-        this.password = "";
-    }
 }
